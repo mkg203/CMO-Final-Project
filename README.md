@@ -10,6 +10,6 @@ python3 run.py
 ```
 
 #### Simulation
-![[](https://github.com/mkg203/CMO-Final-Project/blob/master/media/example.gif)
+![](https://github.com/mkg203/CMO-Final-Project/blob/master/media/example.gif)
 
 
