@@ -22,6 +22,7 @@ def setup():
     fig, ax = plt.subplots()
     ax.plot(*draw_circle(np.linspace(0, 2 * np.pi, 100)))
     ax.set_aspect("equal")
+    ax.axis("off")
     return fig, ax
 
 
@@ -64,6 +65,6 @@ def draw(N, phi_offs, a_vel, K, fig, ax, offset_xs=[], offset_ys=[]):
         repeat=False,
     )
 
-    # ani.save(".\\oscillators.gif", fps=30)
+    # ani.save(".\\media\\example.gif", fps=30)
     plt.show()
 
