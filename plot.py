@@ -8,7 +8,7 @@ r = 5
 
 def circle(phi, phi_off, offset_x, offset_y, a_vel):
     return np.array(
-        [r * np.cos((phi + phi_off)), r * np.sin((phi + phi_off))]
+        [r * np.cos((phi + phi_off + a_vel)), r * np.sin((phi + phi_off + a_vel))]
     ) + np.array([offset_x, offset_y])
 
 
@@ -22,7 +22,6 @@ def setup():
     fig, ax = plt.subplots()
     ax.plot(*draw_circle(np.linspace(0, 2 * np.pi, 100)))
     ax.set_aspect("equal")
-    ax.axis("off")
     return fig, ax
 
 
@@ -36,8 +35,7 @@ def draw(N, phi_offs, a_vel, K, fig, ax, offset_xs=[], offset_ys=[]):
 
     # amount of points
 
-    points = [
-        ax.plot(
+    points = [ ax.plot(
             *circle(0, phi_offs[i], offset_xs[i], offset_ys[i], a_vel[i]), marker="o"
         )[0]
         for i in range(N)
@@ -60,11 +58,10 @@ def draw(N, phi_offs, a_vel, K, fig, ax, offset_xs=[], offset_ys=[]):
         update,
         # fargs=(phi_offs, offset_xs, offset_ys),
         interval=20,
-        frames=np.linspace(0, 2 * np.pi, 360, endpoint=False),
+        frames=np.linspace(0, np.pi, 360, endpoint=False),
         blit=True,
         repeat=False,
     )
 
-    # ani.save(".\\media\\example.gif", fps=30)
+    # ani.save(".\\oscillators.gif", fps=30)
     plt.show()
-

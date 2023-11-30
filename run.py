@@ -3,8 +3,8 @@ import kuramoto
 import plot
 
 
-def driver(N=2):
-    N = 15  # set number of oscillators
+def driver():
+    N = np.uint8(15)  # set number of oscillators
 
     # phi_offs = np.arange(0, 2 * np.pi, step=2/N*np.pi)
     phi_offs = np.random.uniform(0, N * np.pi, N)
@@ -16,7 +16,7 @@ def driver(N=2):
     
     K = kuramoto.coupling_matrix("bu", 1.1, N)
 
-    plot.draw(N, phi_offs, a_vel, K, *plot.setup())
+    plot.draw(N, phi_offs, a_vel * , K, *plot.setup())
 
 
 def main():

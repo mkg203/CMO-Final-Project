@@ -1,12 +1,12 @@
 import numpy as np
+import numpy.typing as ty
 
 
-def kuramoto(omega_i: float, K: float, N: int, theta_i, theta_j: np.array):
+def kuramoto(omega_i: np.float32, K: ty.NDArray[np.float32], N: np.uint32, theta_i: np.float32, theta_j: ty.NDArray[np.float32]):
     return omega_i + np.sum(K / N * (np.sin(theta_j - theta_i)))
 
 
-def coupling_matrix(network_model, K, N):
-    N = int(N)
+def coupling_matrix(network_model: str, K: np.float32, N: np.uint8):
     match network_model:
         case "lu":
             K_matrix = np.array(
