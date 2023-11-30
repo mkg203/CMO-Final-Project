@@ -8,7 +8,7 @@ def driver():
 
     # phi_offs = np.arange(0, 2 * np.pi, step=2/N*np.pi)
     phi_offs = np.random.uniform(0, N * np.pi, N)
-    # a_vel = np.random.uniform(0, 2*np.pi, N)
+    # a_vel = np.random.uniform(0, 2*np.pi, N) * 2 * np.pi
     a_vel = np.ones(N) * 0.1
 
     # offset_xs = np.random.uniform(-30, 30, N)
@@ -16,7 +16,7 @@ def driver():
     
     K = kuramoto.coupling_matrix("bu", 1.1, N)
 
-    plot.draw(N, phi_offs, a_vel * , K, *plot.setup())
+    plot.draw(N, phi_offs, a_vel / 360 , K, *plot.setup())
 
 
 def main():
