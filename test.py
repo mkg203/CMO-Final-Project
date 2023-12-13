@@ -59,7 +59,7 @@ def draw(N, phi_offs, a_vel, K, fig, ax, offset_xs=[], offset_ys=[]):
         update,
         # fargs=(phi_offs, offset_xs, offset_ys),
         interval=20,
-        frames=np.linspace(0, 2*np.pi, 720),
+        frames=np.linspace(0, 2*np.pi, 360),
         blit=True,
         repeat=False,
     )
@@ -74,11 +74,11 @@ if __name__ == "__main__":
     # phi_offs = np.arange(0, 2 * np.pi, step=2/N*np.pi)
     phi_offs = np.random.uniform(0, N * np.pi, N)
     a_vel = np.random.uniform(0, 2*np.pi, N)
-    # a_vel = np.ones(N) * 2 * np.pi # Each oscillator completes 
+    # a_vel = np.ones(N) * 2 * np.pi / 360 # Each oscillator completes 
 
     # offset_xs = np.random.uniform(-30, 30, N)
     # offset_ys = np.random.uniform(-30, 30, N)
     
-    K = kuramoto.coupling_matrix("bu", 1.1, N)
+    K = kuramoto.coupling_matrix("lu", 120, N)
 
     draw(N, phi_offs, a_vel / 360, K, *setup())

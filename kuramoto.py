@@ -22,7 +22,7 @@ def coupling_matrix(network_model: str, K: np.float32, N: np.uint8):
         case "bu":
             K_matrix = np.array(
                 [
-                    [1.0 if i - 1 == j or j - i == N else 0.0 for i in range(N)]
+                    [1.0 if i - 1 == j or j - i == N - 1 else 0.0 for i in range(N)]
                     for j in range(N)
                 ]
             )
@@ -30,7 +30,7 @@ def coupling_matrix(network_model: str, K: np.float32, N: np.uint8):
             K_matrix = np.array(
                 [
                     [
-                        1.0 if i - 1 == j or i + j == 1 or j + i == N else 0.0
+                        1.0 if np.abs(i - j) == 1 or j + i == N - 1 else 0.0
                         for i in range(N)
                     ]
                     for j in range(N)
