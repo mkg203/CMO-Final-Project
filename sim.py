@@ -24,9 +24,16 @@ def simulate_kuramoto(K, N=15, tol=0.0001):
 
 def plot_steps():
     r = np.arange(-5, 5, step=0.1)
-    vals = [simulate_kuramoto(i) for i in r] 
+    vals_dict = {i: simulate_kuramoto(i) for i in r} 
+    vals = list(vals_dict.values())
+    print(min(vals))
     plt.plot(r, vals)
     plt.show()
+
+    vals_dict = [i for i in vals_dict if vals_dict[i] != 1000]
+    print(vals_dict)
+    
+    return np.random.choice(vals_dict)
 
 def derivative(K, h):
     x = simulate_kuramoto(K+h)
@@ -36,29 +43,31 @@ def derivative(K, h):
     return (x-y)/h
 
 def gradient_descent(K, alpha, tol, limit):
-    count = 0
+    def approach(K, h):
+        count = 0
+        while count < limit:
+            count += 1
+            # print(K)
+            fd = derivative(K, h)
+            K_new = K - alpha * fd
+            # print("KVALS: ", K, K_new)
+            if np.abs(K_new - K) < tol or K_new < 0:
+                return K
+            K = K_new
 
-    while count < limit:
-        count += 1
-        # print(K)
-        K_new = K - alpha * derivative(K, 0.1)
-        if np.abs(K_new - K) < tol:
-            return K
-        K = K_new
-    return -1
+        return 1000
+    
+    left = approach(K, 0.1)
+    right = approach(K, -0.1)
+
+    if simulate_kuramoto(left) < simulate_kuramoto(right):
+        return left
+    return right
     
     
 if __name__ == "__main__":
-    N = 3 # set number of oscillators
-
-    phi_offs = np.arange(0, 2 * np.pi, step=2/N*np.pi)
-    # phi_offs = np.random.uniform(0, np.pi, N)
-    # a_vel = np.random.uniform(0, 2*np.pi, N)
-    a_vel = np.ones(N) * 2 * np.pi # Each oscillator completes 
-
-    tol = 0.0001
-    
-    plot_steps()
-    # print(gradient_descent(1.5, 0.001, 0.0001, 1000))
-    # print(simulate_kuramoto(2.4))
-
+    guess = plot_steps()
+    print(guess)
+    x = gradient_descent(guess, 0.001, 0.0001, 1000) # K, alpha, tol, max iterations
+    print(x)
+    print(simulate_kuramoto(x))
