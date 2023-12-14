@@ -2,7 +2,7 @@ import kuramoto
 import numpy as np
 import matplotlib.pyplot as plt
 
-def simulate_kuramoto(K, N=15, tol=0.0001):
+def simulate_kuramoto(K, N=4, tol=0.0001):
     phi_offs = np.arange(0, 2 * np.pi, step=2/N*np.pi)
     K = kuramoto.coupling_matrix("aa", K, N)
     a_vel = np.ones(N) * 2 * np.pi / 360 # Each oscillator completes 
@@ -10,15 +10,15 @@ def simulate_kuramoto(K, N=15, tol=0.0001):
     limit = 1000
     
     while np.var(phi_offs) > tol and steps < limit:
-        # print("variance", np.var(phi_offs))
-        # print("phase diffs:", phi_offs)
-        for i in range(len(a_vel)):
+        # variance = np.var(phi_offs)
+        for i in range(len(phi_offs)):
+            # print(f"{i}, {K[i]}")
             phi_offs[i] += kuramoto.kuramoto(
                 a_vel[i], K[i], N, phi_offs[i], phi_offs
             )
+        # if np.abs(np.var(phi_offs) - variance) < tol * 0.01:
+        #     break
         steps += 1
-    # print("variance", np.var(phi_offs))
-    # print("phase diffs:", phi_offs)
     
     return steps
 
@@ -67,7 +67,8 @@ def gradient_descent(K, alpha, tol, limit):
     
 if __name__ == "__main__":
     guess = plot_steps()
-    print(guess)
-    x = gradient_descent(guess, 0.001, 0.0001, 1000) # K, alpha, tol, max iterations
-    print(x)
-    print(simulate_kuramoto(x))
+    # print(guess)
+    # x = gradient_descent(guess, 0.001, 0.0001, 1000) # K, alpha, tol, max iterations
+    # print(x)
+    # x = 0.7
+    # print(simulate_kuramoto(x))
